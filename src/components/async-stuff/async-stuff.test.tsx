@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, wait } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { AsyncStuff } from './async-stuff.component';
 import { apiCall } from './async-sutff.utils';
@@ -15,7 +15,7 @@ const mockApiCall = apiCall as jest.Mock;
 const getTestData = () => {
   return {
     email: 'sean@sonder.com',
-    password: 'test1234',
+    password: 'abc1234',
   };
 };
 
@@ -40,7 +40,8 @@ test('success submit email and password', async () => {
   expect(mockApiCall).toHaveBeenCalledWith({ email: testData.email, password: testData.password });
 
   // * render success
-  await comp.findByText(/success/i);
+  await wait(() => comp.getByText(/success/i));
+  // await comp.findByText(/success/i);
 });
 
 test('render fail after submit fails', async () => {

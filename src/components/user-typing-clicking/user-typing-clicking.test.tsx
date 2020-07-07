@@ -1,7 +1,7 @@
-import React from 'react';
 import { render } from '@testing-library/react';
-import { UserTypingAndClicking } from './user-typing-clicking.component';
 import user from '@testing-library/user-event';
+import React from 'react';
+import { UserTypingAndClicking } from './user-typing-clicking.component';
 
 const getTestData = () => {
   return {
