@@ -1,51 +1,63 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import user from '@testing-library/user-event';
-
+import { ApolloStuff } from './apollo-stuff.component';
 import { MockedProvider } from '@apollo/react-testing';
-import { ApolloStuff, GET_DOG_PHOTO, GET_DOGS } from './apollo-stuff.component';
+
+// The component AND the query need to be exported
+import { GET_DOGS, GET_DOG_PHOTO } from './apollo-stuff.component';
 
 const mocks = [
   {
-    request: { query: GET_DOGS },
+    request: {
+      query: GET_DOGS,
+    },
     result: {
       data: {
         dogs: [
-          { id: 'Z1fdFgU', breed: 'breed1', __typename: 'Dog' },
-          { id: '6LOk1', breed: 'breed2', __typename: 'Dog' },
-          { id: 'drq7', breed: 'breed3', __typename: 'Dog' },
+          { id: 'Z1fdFgU', breed: 'xxx', __typename: 'Dog' },
+          { id: 'Z1gPiBt', breed: 'yyy', __typename: 'Dog' },
+          { id: 'Z1gePiBt', breed: 'zzz', __typename: 'Dog' },
         ],
       },
     },
   },
-  //
   {
     request: {
       query: GET_DOG_PHOTO,
-      variables: { breed: 'breed1' },
+      variables: { breed: 'yyy' },
     },
     result: {
       data: {
-        dog: { id: '1', breed: 'breed1', displayImage: 'a', __typename: 'xxx' },
+        dog: {
+          id: 'Z1gPiBt',
+          breed: 'yyy',
+          displayImage: 'https://images.dog.ceo/breeds/african/n02116738_8095.jpg',
+          __typename: 'Dog',
+        },
       },
     },
   },
 ];
 
-const renderWithMockProvider = (ui: React.ReactElement) => {
-  return render(
+test('Selecting dog breed from dropdown shows dog image', async () => {
+  const comp = render(
     <MockedProvider mocks={mocks} addTypename={false}>
-      {ui}
+      <ApolloStuff />
     </MockedProvider>
   );
-};
 
-test('select dog breed render dog image', async () => {
-  const comp = renderWithMockProvider(<ApolloStuff />);
+  // Render loading…
+  comp.getByText(/loading.../i);
 
-  const dropdown = await comp.findByTestId('select-dog');
+  // Render dropdown with options
+  const dropdown = await comp.findByTestId('select-dogs');
 
-  user.selectOptions(dropdown, ['breed1']);
+  // Select option from dropdown
+  user.selectOptions(dropdown, ['yyy']);
 
-  await comp.findByAltText('breed1');
+  // Render dog image
+  await comp.findByAltText('yyy');
+
+  comp.debug();
 });

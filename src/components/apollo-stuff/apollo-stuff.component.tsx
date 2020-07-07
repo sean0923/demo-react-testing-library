@@ -8,7 +8,6 @@ export const GET_DOGS = gql`
     dogs {
       id
       breed
-      __typename
     }
   }
 `;
@@ -19,7 +18,6 @@ export const GET_DOG_PHOTO = gql`
       id
       breed
       displayImage
-      __typename
     }
   }
 `;
@@ -35,7 +33,7 @@ const Dogs: any = ({ onDogSelected }: { onDogSelected: any }) => {
   if (error) return `Error! ${error.message}`;
 
   return (
-    <select name="dog" onChange={onDogSelected} data-testid="select-dog">
+    <select name="dog" onChange={onDogSelected} data-testid="select-dogs">
       {data.dogs.map((dog: any) => (
         <option key={dog.id} value={dog.breed}>
           {dog.breed}
