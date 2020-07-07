@@ -1,11 +1,7 @@
 import React from 'react';
 import { apiCall } from './async-sutff.utils';
 
-interface Props {
-  //
-}
-
-export const AsyncStuff: React.FC<Props> = () => {
+export const AsyncStuff: React.FC = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -51,7 +47,7 @@ export const AsyncStuff: React.FC<Props> = () => {
         <button>Submit</button>
       </form>
 
-      {messageFromServer && <div>{messageFromServer}</div>}
+      {messageFromServer && <div data-testid="message-from-server">{messageFromServer}</div>}
     </div>
   );
 };
