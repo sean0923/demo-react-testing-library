@@ -1,10 +1,6 @@
 import React from 'react';
 
-interface Props {
-  //
-}
-
-export const UserTypingAndClicking: React.FC<Props> = () => {
+export const UserTypingAndClicking: React.FC = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
