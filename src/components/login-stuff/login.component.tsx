@@ -47,6 +47,7 @@ export const Login: React.FC = () => {
         <button>Submit</button>
       </form>
 
+      {/* <div data-testid="message-from-server">{messageFromServer}</div> */}
       {messageFromServer && <div data-testid="message-from-server">{messageFromServer}</div>}
     </div>
   );
